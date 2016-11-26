@@ -1,13 +1,20 @@
-var express = require('express');
-var app = express();
-var bodyParser = require("body-parser");
+var express = require('express'),
+    path = require('path'),
+    app = express(),
+    bodyParser = require("body-parser"),
+    hbs = require('express-handlebars');
+
+//set up my templating engine and views directory
+app.engine('hbs', hbs({extname: 'hbs', defaultLayout: 'layout', layoutsDir: __dirname + '/views/layouts/'}));
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hbs');
+
 
 app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.get('/', function(req, res, next) {
-    res.end('<h1>Home Page</h1> <form action="/test/submit" method="post"> <input type="text" name="id"> <button type="submit">Submit</button> </form>'
-    );
+    res.render('index', { title: "here's my title2 test lol" });
 });
 
 app.get('/test/:id', function(req, res, next) {
@@ -19,6 +26,10 @@ app.post('/test/submit', function(req, res, next) {
     var id = req.body.id;
     res.redirect('test/' + id);
 });
+
+
+//404 handling!
+
 
 app.listen(8080, function() {
     console.log('listening on 8080');
