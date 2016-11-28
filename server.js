@@ -14,7 +14,7 @@ app.use(bodyParser.json()); // for parsing application/json
 app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
 
 app.get('/', function(req, res, next) {
-    res.render('index', { title: "here's my title2 test lol" });
+    res.render('index', { title: "title handled by handlebars", myCondition: true, myArray: [1,3,6,10] });
 });
 
 app.get('/test/:id', function(req, res, next) {
